@@ -58,3 +58,63 @@ variable "create_loadbalancer" {
   default     = false
   type        = bool
 }
+
+variable "inbound_rules" {
+  type = list(object({
+    protocol                  = string
+    port_range                = optional(string)
+    source_addresses          = optional(list(string))
+    source_droplet_ids        = optional(list(string))
+    source_tags               = optional(list(string))
+    source_load_balancer_uids = optional(list(string))
+    source_kubernetes_ids     = optional(list(string))
+  }))
+  description = "List of inbound rule configurations for the digitalocean_firewall resource."
+  default = [
+    {
+      protocol         = "tcp"
+      port_range       = "22"
+      source_addresses = ["0.0.0.0/0", "::/0"]
+    },
+    {
+      protocol         = "tcp"
+      port_range       = "80"
+      source_addresses = ["0.0.0.0/0", "::/0"]
+    },
+    {
+      protocol         = "tcp"
+      port_range       = "443"
+      source_addresses = ["0.0.0.0/0", "::/0"]
+    },
+  ]
+}
+
+variable "outbound_rules" {
+  type = list(object({
+    protocol                       = string
+    port_range                     = optional(string)
+    destination_addresses          = optional(list(string))
+    destination_droplet_ids        = optional(list(string))
+    destination_tags               = optional(list(string))
+    destination_load_balancer_uids = optional(list(string))
+    destination_kubernetes_ids     = optional(list(string))
+  }))
+
+  description = "List of outbound rule configurations for the digitalocean_firewall resource."
+  default = [
+    {
+      protocol              = "icmp"
+      destination_addresses = ["0.0.0.0/0", "::/0"]
+    },
+    {
+      protocol              = "tcp"
+      port_range            = "1-65535"
+      destination_addresses = ["0.0.0.0/0", "::/0"]
+    },
+    {
+      protocol              = "udp"
+      port_range            = "1-65535"
+      destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
+  ]
+}

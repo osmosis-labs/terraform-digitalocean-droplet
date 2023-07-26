@@ -1,62 +1,34 @@
-resource "digitalocean_firewall" "in_ssh" {
-  name        = "${var.name}-allow-ssh-in"
-  droplet_ids = [digitalocean_droplet.cosmos_droplet.id]
+resource "digitalocean_firewall" "in" {
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "22"
-    source_addresses = ["0.0.0.0/0", "::/0"]
+  name        = format("%s-fw-in", var.name)
+  droplet_ids = digitalocean_droplet.this.*.id
+
+  dynamic "inbound_rule" {
+    for_each = var.inbound_rules
+    content {
+      protocol                  = inbound_rule.value.protocol
+      port_range                = inbound_rule.value.port_range
+      source_addresses          = inbound_rule.value.source_addresses
+      source_droplet_ids        = inbound_rule.value.source_droplet_ids
+      source_load_balancer_uids = inbound_rule.value.source_load_balancer_uids
+      source_tags               = inbound_rule.value.source_tags
+    }
   }
 }
 
-resource "digitalocean_firewall" "in_tendermint" {
-  name        = "${var.name}-allow-tendermint-ports-in"
-  droplet_ids = [digitalocean_droplet.cosmos_droplet.id]
+resource "digitalocean_firewall" "out" {
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "26656"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
+  name        = format("%s-fw-out", var.name)
+  droplet_ids = digitalocean_droplet.this.*.id
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "26657"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "1317"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "9090"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-}
-
-
-resource "digitalocean_firewall" "out_all" {
-  name        = "${var.name}-allow-out-all"
-  droplet_ids = [digitalocean_droplet.cosmos_droplet.id]
-
-  outbound_rule {
-    protocol              = "icmp"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
+  dynamic "outbound_rule" {
+    for_each = var.outbound_rules
+    content {
+      protocol                = outbound_rule.value.protocol
+      port_range              = outbound_rule.value.port_range
+      destination_addresses   = outbound_rule.value.destination_addresses
+      destination_droplet_ids = outbound_rule.value.destination_droplet_ids
+      destination_tags        = outbound_rule.value.destination_tags
+    }
   }
 }

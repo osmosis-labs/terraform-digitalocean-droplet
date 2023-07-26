@@ -10,18 +10,18 @@ sections:
   hide: ["resources", "data-sources", "modules"]
   show: []
 
-header-from: main.tf
-
 output:
   file: "README.md"
   mode: inject
 
 content: |-
 
-  # Terraform module example
+  # Terraform DigitalOcean Droplet Module
 
-  This Terraform [Resource Module](https://www.terraform-best-practices.com/key-concepts#resource-module) creates a an opionated digitalocean droplet
-  with commonly used options in osmosis deployments.
+  The Terraform DigitalOcean Droplet Module is designed to automate the creation of DigitalOcean droplets
+  with opinionated and standardized configurations for different deployment scenarios.
+  The primary objective of this module is to promote the DRY (Don't Repeat Yourself) principle,
+  reducing code duplication through the use of abstractions and avoiding unnecessary redundancies.
 
   ## Usage
 
@@ -35,6 +35,8 @@ content: |-
 
   - [Simple Droplet](./examples/simple-droplet)
   - [Droplet with Volume](./examples/droplet-with-volume)
+  - [Droplet with Load Balancer](./examples/droplet-with-loadbalancer)
+  - [Droplet with Firewall Rules](./examples/droplet-with-firewall-rules)
 
   {{ .Requirements }}
 

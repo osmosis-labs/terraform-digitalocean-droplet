@@ -1,9 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
 
-# Terraform module example
+# Terraform DigitalOcean Droplet Module
 
-This Terraform [Resource Module](https://www.terraform-best-practices.com/key-concepts#resource-module) creates a an opionated digitalocean droplet
-with commonly used options in osmosis deployments.
+The Terraform DigitalOcean Droplet Module is designed to automate the creation of DigitalOcean droplets
+with opinionated and standardized configurations for different deployment scenarios.
+The primary objective of this module is to promote the DRY (Don't Repeat Yourself) principle,
+reducing code duplication through the use of abstractions and avoiding unnecessary redundancies.
 
 ## Usage
 
@@ -38,6 +40,8 @@ The following examples are available:
 
 - [Simple Droplet](./examples/simple-droplet)
 - [Droplet with Volume](./examples/droplet-with-volume)
+- [Droplet with Load Balancer](./examples/droplet-with-loadbalancer)
+- [Droplet with Firewall Rules](./examples/droplet-with-firewall-rules)
 
 ## Requirements
 
@@ -60,8 +64,10 @@ The following examples are available:
 | create\_loadbalancer | Enable loadbalancer creation. | `false` | no |
 | droplet\_count | Number of droplets to create | `1` | no |
 | image | Droplet image name | `"ubuntu-22-04-x64"` | no |
+| inbound\_rules | List of inbound rule configurations for the digitalocean\_firewall resource. | ```[ { "port_range": "22", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "80", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "443", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] } ]``` | no |
 | name | Droplet name | n/a | yes |
 | osmosis\_users | List of users that will have access to the droplets | ```[ "devops@osmosis.team" ]``` | no |
+| outbound\_rules | List of outbound rule configurations for the digitalocean\_firewall resource. | ```[ { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "protocol": "icmp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "tcp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "udp" } ]``` | no |
 | region | Digitalocean Region | `"fra1"` | no |
 | size | Droplet sizing. Find slugs with: `doctl compute size list` | `"m3-4vcpu-32gb"` | no |
 | tags | A list of the tags to be applied to the node. | `[]` | no |
