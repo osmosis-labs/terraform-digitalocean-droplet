@@ -51,9 +51,7 @@ variable "tags" {
   type        = list(string)
 }
 
-# Firewall rules
-
-variable "inbound_rules" {
+variable "firewall_inbound_rules" {
   type = list(object({
     protocol                  = string
     port_range                = optional(string)
@@ -83,7 +81,7 @@ variable "inbound_rules" {
   ]
 }
 
-variable "outbound_rules" {
+variable "firewall_outbound_rules" {
   type = list(object({
     protocol                       = string
     port_range                     = optional(string)
