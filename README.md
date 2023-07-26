@@ -62,11 +62,11 @@ The following examples are available:
 | Name | Description | Default | Required |
 |------|-------------|---------|:--------:|
 | droplet\_count | Number of droplets to create | `1` | no |
+| firewall\_inbound\_rules | List of inbound rule configurations for the digitalocean\_firewall resource. | ```[ { "port_range": "22", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "80", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "443", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] } ]``` | no |
+| firewall\_outbound\_rules | List of outbound rule configurations for the digitalocean\_firewall resource. | ```[ { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "protocol": "icmp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "tcp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "udp" } ]``` | no |
 | image | Droplet image name | `"ubuntu-22-04-x64"` | no |
-| inbound\_rules | List of inbound rule configurations for the digitalocean\_firewall resource. | ```[ { "port_range": "22", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "80", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "443", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] } ]``` | no |
 | name | Droplet name | n/a | yes |
 | osmosis\_users | List of users that will have access to the droplets | ```[ "devops@osmosis.team" ]``` | no |
-| outbound\_rules | List of outbound rule configurations for the digitalocean\_firewall resource. | ```[ { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "protocol": "icmp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "tcp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "udp" } ]``` | no |
 | region | Digitalocean Region | `"fra1"` | no |
 | size | Droplet sizing. Find slugs with: `doctl compute size list` | `"m3-4vcpu-32gb"` | no |
 | tags | A list of the tags to be applied to the node. | `[]` | no |
