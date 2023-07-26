@@ -51,13 +51,7 @@ variable "tags" {
   type        = list(string)
 }
 
-# Networking
-
-variable "create_loadbalancer" {
-  description = "Enable loadbalancer creation."
-  default     = false
-  type        = bool
-}
+# Firewall rules
 
 variable "inbound_rules" {
   type = list(object({

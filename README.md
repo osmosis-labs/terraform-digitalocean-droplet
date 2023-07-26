@@ -61,7 +61,6 @@ The following examples are available:
 
 | Name | Description | Default | Required |
 |------|-------------|---------|:--------:|
-| create\_loadbalancer | Enable loadbalancer creation. | `false` | no |
 | droplet\_count | Number of droplets to create | `1` | no |
 | image | Droplet image name | `"ubuntu-22-04-x64"` | no |
 | inbound\_rules | List of inbound rule configurations for the digitalocean\_firewall resource. | ```[ { "port_range": "22", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "80", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "443", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] } ]``` | no |
