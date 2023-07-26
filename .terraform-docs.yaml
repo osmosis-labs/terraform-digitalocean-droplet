@@ -25,9 +25,16 @@ content: |-
 
   ## Usage
 
-  Some examples can be found in this repository:
+    ```hcl
+    {{ include "examples/simple-droplet/main.tf" }}
+  ```
 
-  - [Use case 1](./examples/use-case-1)
+  ### Examples
+
+  The following examples are available:
+
+  - [Simple Droplet](./examples/simple-droplet)
+  - [Droplet with Volume](./examples/droplet-with-volume)
 
   {{ .Requirements }}
 

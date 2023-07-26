@@ -6,34 +6,17 @@ terraform {
   }
 }
 
-module "cosmos-droplet" {
+module "simple_droplet" {
   source = "../../"
 
-  name   = "example-cosmos-droplet"
-  region = "nyc3"
-  size   = "s-4vcpu-8gb"
+  name   = "simple-droplet"
+  region = "fra1"
+  size   = "s-1vcpu-1gb-amd"
 
-  tags = ["cosmos", "fullnode"]
+  tags = ["example"]
 }
 
-output "ip" {
-  value       = module.cosmos-droplet.ip
-  description = "Droplet IP"
-}
-
-output "private_key" {
-  value       = module.cosmos-droplet.tls_private_key
-  sensitive   = true
-  description = "Private key to connect to the droplet"
-}
-
-output "ssh_help" {
-  value       = <<EOT
-Get ssh key:
-terraform output --raw private_key > droplet.key && chmod 600 droplet.key
-
-Connect to the instance:
-ssh cosmos@${module.cosmos-droplet.ip} -i droplet.key 
-EOT
-  description = "Instructions to connect with the instance"
+output "ips" {
+  value       = module.simple_droplet.droplets_ips
+  description = "Droplet IPs"
 }

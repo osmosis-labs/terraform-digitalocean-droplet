@@ -6,46 +6,33 @@ terraform {
   }
 }
 
-resource "digitalocean_volume" "cosmos-droplet" {
-  region                  = "nyc3"
-  name                    = "example-cosmos-volume"
-  size                    = 100
+module "volume_droplet" {
+  source = "../../"
+
+  name   = "volume-droplet"
+  region = "fra1"
+  size   = "s-1vcpu-1gb-amd"
+
+  tags = ["example"]
+}
+
+# Volume
+
+resource "digitalocean_volume" "example" {
+  region                  = "fra1"
+  name                    = "example-volume"
+  size                    = 1
   initial_filesystem_type = "ext4"
 }
 
-module "cosmos-droplet" {
-  source = "../../"
-
-  name   = "example-cosmos-droplet"
-  region = "nyc3"
-  size   = "s-4vcpu-8gb"
-
-  tags = ["cosmos", "fullnode"]
+resource "digitalocean_volume_attachment" "example" {
+  volume_id  = digitalocean_volume.example.id
+  droplet_id = module.volume_droplet.droplets_ids[0]
 }
 
-resource "digitalocean_volume_attachment" "cosmos-droplet" {
-  droplet_id = module.cosmos-droplet.id
-  volume_id  = digitalocean_volume.cosmos-droplet.id
-}
+# Outputs
 
-output "ip" {
-  value       = module.cosmos-droplet.ip
-  description = "Droplet IP"
-}
-
-output "private_key" {
-  value       = module.cosmos-droplet.tls_private_key
-  sensitive   = true
-  description = "Private key to connect to the droplet"
-}
-
-output "ssh_help" {
-  value       = <<EOT
-Get ssh key:
-terraform output --raw private_key > droplet.key && chmod 600 droplet.key
-
-Connect to the instance:
-ssh cosmos@${module.cosmos-droplet.ip} -i droplet.key 
-EOT
-  description = "Instructions to connect with the instance"
+output "ips" {
+  value       = module.volume_droplet.droplets_ips
+  description = "Droplet IPs"
 }

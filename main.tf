@@ -1,6 +1,6 @@
 data "digitalocean_ssh_keys" "this" {
 
-  # We always give the devops@osmosis.team team 
+  # We always give the devops@osmosis.team team
   # access to the droplets
   filter {
     key    = "name"

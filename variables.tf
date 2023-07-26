@@ -1,6 +1,5 @@
 variable "name" {
   description = "Droplet name"
-  default     = "rpc-osmosis-zone"
   type        = string
 }
 
@@ -24,9 +23,8 @@ variable "image" {
 
 variable "size" {
   description = "Droplet sizing. Find slugs with: `doctl compute size list`"
-  # default     = "m3-4vcpu-32gb"
-  default = "s-1vcpu-1gb-amd"
-  type    = string
+  default     = "m3-4vcpu-32gb"
+  type        = string
 }
 
 variable "osmosis_users" {
