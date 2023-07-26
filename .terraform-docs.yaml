@@ -10,21 +10,24 @@ sections:
   hide: ["resources", "data-sources", "modules"]
   show: []
 
+header-from: main.tf
+
+output:
+  file: "README.md"
+  mode: inject
+
 content: |-
 
-  # Terraform Digitalocean Droplet
+  # Terraform module example
 
-  This Terraform module creates an opinionated Droplet on Digitalocean for Cosmos Blockchain Nodes.
+  This Terraform [Resource Module](https://www.terraform-best-practices.com/key-concepts#resource-module) creates a an opionated digitalocean droplet
+  with commonly used options in osmosis deployments.
 
-  ## Usage Examples
+  ## Usage
 
   Some examples can be found in this repository:
 
-  - [Simple Droplet](./examples/simple-droplet)
-  - [Droplet with Volume](./examples/droplet-with-volume)
-  - [Droplet with Floating IP](./examples/droplet-with-floating-ip)
-  - [Droplet with Monitor Alert](./examples/droplet-with-monitor-alert)
-
+  - [Use case 1](./examples/use-case-1)
 
   {{ .Requirements }}
 
@@ -37,12 +40,8 @@ content: |-
   ## Usage
 
   ```hcl
-  {{ include "examples/simple-droplet/main.tf" }}
+  {{ include "examples/use-case-1/main.tf" }}
   ```
-
-output:
-  file: "README.md"
-  mode: replace
 
 output-values:
   enabled: false
