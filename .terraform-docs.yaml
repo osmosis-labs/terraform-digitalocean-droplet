@@ -33,15 +33,9 @@ content: |-
 
   {{ .Providers }}
 
-  {{ .Inputs }}  
+  {{ .Inputs }}
 
   {{ .Outputs }}
-
-  ## Usage
-
-  ```hcl
-  {{ include "examples/use-case-1/main.tf" }}
-  ```
 
 output-values:
   enabled: false
