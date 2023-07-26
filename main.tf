@@ -1,36 +1,37 @@
-locals {
-  username = "cosmos"
-  moniker  = var.name
+data "digitalocean_ssh_keys" "this" {
+
+  # We always give the devops@osmosis.team team 
+  # access to the droplets
+  filter {
+    key    = "name"
+    values = concat(["devops@osmosis.team"], var.osmosis_users)
+  }
 }
 
-resource "digitalocean_droplet" "cosmos_droplet" {
-  name   = var.name
+resource "digitalocean_droplet" "this" {
+
+  count = var.droplet_count
+
+  name   = format("%s-%s-%s", var.name, var.region, count.index)
   region = var.region
   image  = var.image
   size   = var.size
-  tags   = concat(var.tags, ["terraform"])
 
-  monitoring = true
-
-  # Volumes
-  volume_ids = var.volume_ids
-
-  # SSH Access
-  ssh_keys = [
-    digitalocean_ssh_key.cosmos_droplet.fingerprint
-  ]
+  monitoring    = true
   droplet_agent = false
+  backups       = false
 
-  # Initialize node via cloud init
-  user_data = data.template_file.cosmos_base.rendered
-}
+  # Volumes on DigitalOcean are not very fast
+  # we generally prefer using local disk instead
+  volume_ids = []
 
-data "template_file" "cosmos_base" {
-  template = file("${path.module}/templates/base.yaml")
+  # We leave to the module user the responsibility of
+  # create a VPC and pass the UUID to the module
+  vpc_uuid = var.vpc_uuid
 
-  vars = {
-    ssh_authorized_key = local.create_tls_key ? tls_private_key.cosmos_tls_key.0.public_key_openssh : file(var.tls_public_key)
-    username           = local.username
-    moniker            = local.moniker
-  }
+  # Cloud init configuration is left to the user
+  user_data = var.user_data
+
+  ssh_keys = data.digitalocean_ssh_keys.this.ssh_keys.*.fingerprint
+  tags     = concat(["terraform"], var.tags)
 }

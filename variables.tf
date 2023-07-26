@@ -1,31 +1,50 @@
+variable "name" {
+  description = "Droplet name"
+  default     = "rpc-osmosis-zone"
+  type        = string
+}
+
+variable "droplet_count" {
+  description = "Number of droplets to create"
+  default     = 1
+  type        = number
+}
+
 variable "region" {
   description = "Digitalocean Region"
-  default     = "nyc3"
+  default     = "fra1"
   type        = string
 }
 
 variable "image" {
   description = "Droplet image name"
-  default     = "docker-20-04"
+  default     = "ubuntu-22-04-x64"
   type        = string
 }
 
 variable "size" {
   description = "Droplet sizing. Find slugs with: `doctl compute size list`"
-  default     = "s-4vcpu-8gb"
-  type        = string
+  # default     = "m3-4vcpu-32gb"
+  default = "s-1vcpu-1gb-amd"
+  type    = string
 }
 
-variable "name" {
-  description = "Node name"
-  default     = "cosmos-droplet"
-  type        = string
-}
-
-variable "volume_ids" {
-  description = "A list of volume IDs to attach to the node."
-  default     = []
+variable "osmosis_users" {
+  description = "List of users that will have access to the droplets"
+  default     = ["devops@osmosis.team"]
   type        = list(string)
+}
+
+variable "vpc_uuid" {
+  description = "The ID of the VPC where the Droplet will be located."
+  default     = null
+  type        = string
+}
+
+variable "user_data" {
+  description = "A string of the desired User Data for the Droplet."
+  default     = null
+  type        = string
 }
 
 variable "tags" {
@@ -34,14 +53,10 @@ variable "tags" {
   type        = list(string)
 }
 
-variable "tls_public_key" {
-  description = "Path to public tls key - automatically generated if empty"
-  default     = ""
-  type        = string
-}
+# Networking
 
-variable "tls_private_key" {
-  description = "Path to private tls key - automatically generated if empty"
-  default     = ""
-  type        = string
+variable "create_loadbalancer" {
+  description = "Enable loadbalancer creation."
+  default     = false
+  type        = bool
 }
