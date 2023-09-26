@@ -55,7 +55,7 @@ The following examples are available:
 
 | Name | Version |
 |------|---------|
-| digitalocean | 2.29.0 |
+| digitalocean | ~> 2.17 |
 
 ## Inputs
 
@@ -79,5 +79,7 @@ The following examples are available:
 |------|-------------|
 | droplets\_ids | Droplet IPs |
 | droplets\_ips | Droplet IPs |
+| region | REGIONs of all the created resources |
+| server\_name | NAMEs of all the created resources |
 | urns | URNs of all the created resources |
 <!-- END_TF_DOCS -->
