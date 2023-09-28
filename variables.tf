@@ -3,12 +3,6 @@ variable "name" {
   type        = string
 }
 
-variable "droplet_count" {
-  description = "Number of droplets to create"
-  default     = 1
-  type        = number
-}
-
 variable "region" {
   description = "Digitalocean Region"
   default     = "fra1"

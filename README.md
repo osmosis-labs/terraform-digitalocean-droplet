@@ -61,7 +61,6 @@ The following examples are available:
 
 | Name | Description | Default | Required |
 |------|-------------|---------|:--------:|
-| droplet\_count | Number of droplets to create | `1` | no |
 | firewall\_inbound\_rules | List of inbound rule configurations for the digitalocean\_firewall resource. | ```[ { "port_range": "22", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "80", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] }, { "port_range": "443", "protocol": "tcp", "source_addresses": [ "0.0.0.0/0", "::/0" ] } ]``` | no |
 | firewall\_outbound\_rules | List of outbound rule configurations for the digitalocean\_firewall resource. | ```[ { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "protocol": "icmp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "tcp" }, { "destination_addresses": [ "0.0.0.0/0", "::/0" ], "port_range": "1-65535", "protocol": "udp" } ]``` | no |
 | image | Droplet image name | `"ubuntu-22-04-x64"` | no |
@@ -77,9 +76,9 @@ The following examples are available:
 
 | Name | Description |
 |------|-------------|
-| droplets\_ids | Droplet IPs |
-| droplets\_ips | Droplet IPs |
+| droplets\_id | Droplet IP |
+| droplets\_ip | Droplet IP |
 | region | REGIONs of all the created resources |
 | server\_name | NAMEs of all the created resources |
-| urns | URNs of all the created resources |
+| urn | URNs of all the created resources |
 <!-- END_TF_DOCS -->

@@ -10,9 +10,7 @@ data "digitalocean_ssh_keys" "this" {
 
 resource "digitalocean_droplet" "this" {
 
-  count = var.droplet_count
-
-  name   = format("%s-%s-%s", var.name, var.region, count.index)
+  name   = var.name
   region = var.region
   image  = var.image
   size   = var.size
